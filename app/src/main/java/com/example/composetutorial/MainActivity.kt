@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.gestures.detectDragGestures
+import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.*
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
@@ -41,7 +42,8 @@ fun Content() {
 
     Canvas(
         modifier = Modifier
-            .fillMaxSize()
+            .size(size = 300.dp)
+           // .fillMaxSize()
             .pointerInput(Unit) {
                 detectDragGestures { change, dragAmount ->
                     handleCenter += dragAmount
@@ -57,15 +59,38 @@ fun Content() {
         val y = (shapeCenter.y + sin(toRadians(angle)) * radius).toFloat()
         handleCenter = Offset(x, y)
         drawCircle(color = Color.Black.copy(alpha = 0.10f), style = Stroke(80f), radius = radius)
-/*
+
+
         drawArc(
             color = Color.Yellow,
             startAngle = 0f,
-            sweepAngle = angle.toFloat(),
+            sweepAngle = 90f,
             useCenter = false,
-            style = Stroke(20f)
+            style = Stroke(80f)
         )
-*/
+        drawArc(
+            color = Color.Blue,
+            startAngle = 90f,
+            sweepAngle = 90f,
+            useCenter = false,
+            style = Stroke(80f)
+        )
+        drawArc(
+            color = Color.Green,
+            startAngle = 180f,
+            sweepAngle = 90f,
+            useCenter = false,
+            style = Stroke(80f)
+        )
+        drawArc(
+            color = Color.Red,
+            startAngle = 270f,
+            sweepAngle = 90f,
+            useCenter = false,
+            style = Stroke(80f)
+        )
+
+
         drawCircle(color = Color.Cyan, center = handleCenter, radius = 60f)
     }
 }
