@@ -45,9 +45,7 @@ fun Content() {
 
     Canvas(
         modifier = Modifier
-          // .size(size = 300.dp)
            .fillMaxSize()
-           // .height(300.dp)
             .pointerInput(Unit) {
                 detectDragGestures { change, dragAmount ->
                     handleCenter += dragAmount
@@ -62,7 +60,6 @@ fun Content() {
         val x = (shapeCenter.x + cos(toRadians(angle)) * radius).toFloat()
         val y = (shapeCenter.y + sin(toRadians(angle)) * radius).toFloat()
         handleCenter = Offset(x, y)
-        drawCircle(color = Color.Black.copy(alpha = 0.10f), style = Stroke(80f), radius = radius)
 
 
         drawArc(
@@ -101,8 +98,6 @@ fun Content() {
             topLeft = Offset(shapeCenter.x-radius,shapeCenter.y-radius),
             size = Size(radius*2, radius*2)
         )
-
-
         drawCircle(color = Color.Cyan, center = handleCenter, radius = 60f)
     }
 }
