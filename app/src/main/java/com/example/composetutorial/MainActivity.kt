@@ -13,9 +13,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.gestures.detectDragGestures
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInput
@@ -42,8 +45,9 @@ fun Content() {
 
     Canvas(
         modifier = Modifier
-            .size(size = 300.dp)
-           // .fillMaxSize()
+          // .size(size = 300.dp)
+           .fillMaxSize()
+           // .height(300.dp)
             .pointerInput(Unit) {
                 detectDragGestures { change, dragAmount ->
                     handleCenter += dragAmount
@@ -66,28 +70,36 @@ fun Content() {
             startAngle = 0f,
             sweepAngle = 90f,
             useCenter = false,
-            style = Stroke(80f)
+            style = Stroke(80f),
+            topLeft = Offset(shapeCenter.x-radius,shapeCenter.y-radius),
+            size = Size(radius*2, radius*2)
         )
         drawArc(
             color = Color.Blue,
             startAngle = 90f,
             sweepAngle = 90f,
             useCenter = false,
-            style = Stroke(80f)
+            style = Stroke(80f),
+            topLeft = Offset(shapeCenter.x-radius,shapeCenter.y-radius),
+            size = Size(radius*2, radius*2)
         )
         drawArc(
             color = Color.Green,
             startAngle = 180f,
             sweepAngle = 90f,
             useCenter = false,
-            style = Stroke(80f)
+            style = Stroke(80f),
+            topLeft = Offset(shapeCenter.x-radius,shapeCenter.y-radius),
+            size = Size(radius*2, radius*2)
         )
         drawArc(
             color = Color.Red,
             startAngle = 270f,
             sweepAngle = 90f,
             useCenter = false,
-            style = Stroke(80f)
+            style = Stroke(80f),
+            topLeft = Offset(shapeCenter.x-radius,shapeCenter.y-radius),
+            size = Size(radius*2, radius*2)
         )
 
 
