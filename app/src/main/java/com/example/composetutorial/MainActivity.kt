@@ -14,10 +14,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.runtime.*
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.draw.drawWithCache
+import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInput
@@ -60,6 +65,7 @@ fun Content() {
         .offset(y= ((height/2)-rd/2).dp,x= ((width/2)-rd/2).dp)
         .clip(CircleShape)
         .size((rd).dp)
+
     Image(
         painter = painterResource(
             id = getPic(angle)),
@@ -70,6 +76,20 @@ fun Content() {
     Canvas(
         modifier = Modifier
             .fillMaxSize()
+            .drawWithCache {
+                val brush = Brush.linearGradient(
+                    listOf(
+                        Color(0xFF9E82F0),
+                        Color(0xFF42A5F5)
+                    )
+                )
+                onDrawBehind {
+                    drawRoundRect(
+                        brush,
+                        cornerRadius = CornerRadius(10.dp.toPx())
+                    )
+                }
+            }
             .pointerInput(Unit) {
                 detectDragGestures { change, dragAmount ->
                     handleCenter += dragAmount
@@ -86,27 +106,37 @@ fun Content() {
         handleCenter = Offset(x, y)
 
         drawArc(
-            color = Color.Yellow,
-            startAngle = 0f,
-            sweepAngle = 90f,
-            useCenter = false,
-            style = Stroke(80f),
-            topLeft = Offset(shapeCenter.x-radius,shapeCenter.y-radius),
-            size = Size(radius*2, radius*2)
-        )
-        drawArc(
-            color = Color.Blue,
-            startAngle = 90f,
-            sweepAngle = 90f,
-            useCenter = false,
-            style = Stroke(80f),
-            topLeft = Offset(shapeCenter.x-radius,shapeCenter.y-radius),
-            size = Size(radius*2, radius*2)
-        )
-        drawArc(
             color = Color.Green,
-            startAngle = 180f,
-            sweepAngle = 90f,
+            startAngle = 270f,
+            sweepAngle = 72f,
+            useCenter = false,
+            style = Stroke(80f),
+            topLeft = Offset(shapeCenter.x-radius,shapeCenter.y-radius),
+            size = Size(radius*2, radius*2)
+        )
+
+        drawArc(
+            color = Color.Cyan,
+            startAngle = 342f,
+            sweepAngle = 72f,
+            useCenter = false,
+            style = Stroke(80f),
+            topLeft = Offset(shapeCenter.x-radius,shapeCenter.y-radius),
+            size = Size(radius*2, radius*2)
+        )
+        drawArc(
+            color = Color.Yellow,
+            startAngle = 54f,
+            sweepAngle = 72f,
+            useCenter = false,
+            style = Stroke(80f),
+            topLeft = Offset(shapeCenter.x-radius,shapeCenter.y-radius),
+            size = Size(radius*2, radius*2)
+        )
+        drawArc(
+            color = Color.Magenta,
+            startAngle = 126f,
+            sweepAngle = 72f,
             useCenter = false,
             style = Stroke(80f),
             topLeft = Offset(shapeCenter.x-radius,shapeCenter.y-radius),
@@ -114,14 +144,14 @@ fun Content() {
         )
         drawArc(
             color = Color.Red,
-            startAngle = 270f,
-            sweepAngle = 90f,
+            startAngle = 198f,
+            sweepAngle = 72f,
             useCenter = false,
             style = Stroke(80f),
             topLeft = Offset(shapeCenter.x-radius,shapeCenter.y-radius),
             size = Size(radius*2, radius*2)
         )
-        drawCircle(color = Color.Cyan, center = handleCenter, radius = 60f)
+        drawCircle(color = Color.Blue, center = handleCenter, radius = 60f)
     }
 }
 
