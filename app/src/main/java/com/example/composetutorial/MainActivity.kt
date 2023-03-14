@@ -66,13 +66,8 @@ fun Content() {
         .clip(CircleShape)
         .size((rd).dp)
 
-    Image(
-        painter = painterResource(
-            id = getPic(angle)),
-        contentDescription = stringResource(id = R.string.dog_content_description),
-        contentScale = ContentScale.Fit,
-        modifier = imageModifier,
-    )
+
+
     Canvas(
         modifier = Modifier
             .fillMaxSize()
@@ -152,7 +147,15 @@ fun Content() {
             size = Size(radius*2, radius*2)
         )
         drawCircle(color = Color.Blue, center = handleCenter, radius = 60f)
+
     }
+    Image(
+        painter = painterResource(
+            id = getPic(angle)),
+        contentDescription = stringResource(id = R.string.dog_content_description),
+        contentScale = ContentScale.Fit,
+        modifier = imageModifier,
+    )
 }
 
 private fun getPic(angl: Double): Int {
