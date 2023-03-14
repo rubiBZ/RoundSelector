@@ -3,10 +3,10 @@ package com.example.composetutorial
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.*
-import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.composetutorial.ui.theme.ComposeTutorialTheme
@@ -14,8 +14,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.*
 import androidx.compose.material.MaterialTheme.colors
-import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
@@ -27,11 +27,15 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Paint
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
+import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Typeface
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.sp
 import java.lang.Math.*
 import kotlin.math.atan2
@@ -67,18 +71,23 @@ fun Content() {
         var shapeCenter by remember { mutableStateOf(Offset.Zero) }
         var handleCenter by remember { mutableStateOf(Offset.Zero) }
         var angle by remember { mutableStateOf(20.0) }
+        val paint = Paint().asFrameworkPaint().apply {
+            textSize = 100F
+            textAlign = android.graphics.Paint.Align.CENTER
+        }
         val imageModifier = Modifier
             .offset(y = ((height / 2) - rd / 2).dp, x = ((width / 2) - rd / 2).dp)
             .clip(CircleShape)
             .size((rd).dp)
+
         Canvas(
             modifier = Modifier
                 .fillMaxSize()
                 .drawWithCache {
                     val brush = Brush.linearGradient(
                         listOf(
-                            Color(0xFF9E82F0),
-                            Color(0xFF42A5F5)
+                            Color(0xFF25BFEA),
+                            Color(0xFF06B7E9)
                         )
                     )
                     onDrawBehind {
@@ -97,7 +106,6 @@ fun Content() {
                 }
                 .padding(100.dp)
         )
-
         {
             shapeCenter = center
             radius = size.minDimension / 2 + 100
@@ -150,9 +158,20 @@ fun Content() {
                 topLeft = Offset(shapeCenter.x - radius, shapeCenter.y - radius),
                 size = Size(radius * 2, radius * 2)
             )
+            drawIntoCanvas {
+                it.nativeCanvas.drawText("מה ההרגשה כרגע בגוף?",  250f, 200f, paint)
+            }
+            /*
+            drawLine(
+                start = Offset(x = 0f, y = height/2),
+                end = Offset(x = width/2, y = 0f),
+                color = Color.Blue,
+                strokeWidth = 20f
+            )
+
+             */
             drawCircle(color = Color.Blue, center = handleCenter, radius = 60f)
         }
-
         Image(
             painter = painterResource(
                 id = getPic(angle)
@@ -165,7 +184,7 @@ fun Content() {
 }
 
 private fun getPic(angl: Double): Int {
-    Log.d("RRubi",angl.toString())
+   // Log.d("RRubi",angl.toString())
     when (angl) {
         in 270.1..342.0 -> pic =  R.raw.pic1
         in 342.1..359.9 -> pic =  R.raw.pic2
@@ -188,13 +207,213 @@ private fun getRotationAngle(currentPosition: Offset, center: Offset): Double {
     return angle
 }
 
+@Composable
+fun MessageCard(msg: String) {
+    Column {
+        Text(text = msg)
+        Text(text = msg)
+    }
+}
+
+@Composable
+fun SimpleTextField() {
+    var text by remember { mutableStateOf(TextFieldValue("")) }
+    TextField(
+        value = text,
+        onValueChange = { newText ->
+            text = newText
+        }
+    )
+}
+
 @Preview
 @Composable
 fun PreviewContent() {
     ComposeTutorialTheme {
         Surface {
             Content()
+            MyDB1()
+            MyDB2()
+            MyDB3()
+            sendButton()
+            //MessageCard("rubi")
+           // SimpleTextField()
         }
+    }
+}
+
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+fun MyDB1() {
+    val dropDounModifier = Modifier
+        .offset(y = ((height / 2) + rd*1.2).dp, x = (width/8).dp)
+        .size((width/2).dp)
+        .height((rd/3).dp)
+    val listItems = arrayOf("Favorites", "Options", "Settings", "Share")
+    val contextForToast = LocalContext.current.applicationContext
+    var expanded by remember {mutableStateOf(false)} // state of the menu
+    var selectedItem by remember {mutableStateOf(listItems[0])} // remember the selected item
+    // box
+    ExposedDropdownMenuBox(
+        expanded = expanded,
+        modifier = dropDounModifier,
+        onExpandedChange = {
+            expanded = !expanded
+        }
+    ) {
+        // text field
+        TextField(
+            value = selectedItem,
+            onValueChange = {},
+            readOnly = true,
+            label = { Text(text = "סל חיובי") },
+            trailingIcon = {
+                ExposedDropdownMenuDefaults.TrailingIcon(
+                    expanded = expanded
+                )
+            },
+            colors = ExposedDropdownMenuDefaults.textFieldColors()
+        )
+        // menu
+        ExposedDropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false }
+        ) {
+            // this is a column scope
+            // all the items are added vertically
+            listItems.forEach { selectedOption ->
+                // menu item
+                DropdownMenuItem(onClick = {
+                    selectedItem = selectedOption
+                    Toast.makeText(contextForToast, selectedOption, Toast.LENGTH_SHORT).show()
+                    expanded = false
+                }) {
+                    Text(text = selectedOption)
+                }
+            }
+        }
+    }
+}
+
+
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+fun MyDB2() {
+    val dropDounModifier = Modifier
+        .offset(y = ((height / 2) + rd*1.7).dp, x = (width/8).dp)
+        .size((width/2).dp)
+    val listItems = arrayOf("Favorites", "Options", "Settings", "Share")
+    val contextForToast = LocalContext.current.applicationContext
+    var expanded by remember {mutableStateOf(false)} // state of the menu
+    var selectedItem by remember {mutableStateOf(listItems[0])} // remember the selected item
+    // box
+    ExposedDropdownMenuBox(
+        expanded = expanded,
+        modifier = dropDounModifier,
+        onExpandedChange = {
+            expanded = !expanded
+        }
+    ) {
+        // text field
+        TextField(
+            value = selectedItem,
+            onValueChange = {},
+            readOnly = true,
+            label = { Text(text = "סל שלילי") },
+            trailingIcon = {
+                ExposedDropdownMenuDefaults.TrailingIcon(
+                    expanded = expanded
+                )
+            },
+            colors = ExposedDropdownMenuDefaults.textFieldColors()
+        )
+        // menu
+        ExposedDropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false }
+        ) {
+            // this is a column scope
+            // all the items are added vertically
+            listItems.forEach { selectedOption ->
+                // menu item
+                DropdownMenuItem(onClick = {
+                    selectedItem = selectedOption
+                    Toast.makeText(contextForToast, selectedOption, Toast.LENGTH_SHORT).show()
+                    expanded = false
+                }) {
+                    Text(text = selectedOption)
+                }
+            }
+        }
+    }
+}
+
+
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+fun MyDB3() {
+    val dropDounModifier = Modifier
+        .offset(y = ((height / 2) + rd*2.2).dp, x = (width/8).dp)
+        .size((width/2).dp)
+    val listItems = arrayOf("Favorites", "Options", "Settings", "Share")
+    val contextForToast = LocalContext.current.applicationContext
+    var expanded by remember {mutableStateOf(false)} // state of the menu
+    var selectedItem by remember {mutableStateOf(listItems[0])} // remember the selected item
+    // box
+    ExposedDropdownMenuBox(
+        expanded = expanded,
+        modifier = dropDounModifier,
+        onExpandedChange = {
+            expanded = !expanded
+        }
+    ) {
+        // text field
+        TextField(
+            value = selectedItem,
+            onValueChange = {},
+            readOnly = true,
+            label = { Text(text = "סל נייטרלי") },
+            trailingIcon = {
+                ExposedDropdownMenuDefaults.TrailingIcon(
+                    expanded = expanded
+                )
+            },
+            colors = ExposedDropdownMenuDefaults.textFieldColors()
+        )
+        // menu
+        ExposedDropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false }
+        ) {
+            // this is a column scope
+            // all the items are added vertically
+            listItems.forEach { selectedOption ->
+                // menu item
+                DropdownMenuItem(onClick = {
+                    selectedItem = selectedOption
+                    Toast.makeText(contextForToast, selectedOption, Toast.LENGTH_SHORT).show()
+                    expanded = false
+                }) {
+                    Text(text = selectedOption)
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun sendButton() {
+    val btnModifier = Modifier
+        .offset(y = ((height / 2) + rd*2.2).dp, x = (width/1.5).dp)
+        //.size((width/4).dp)
+        .height((width/6).dp)
+        .width((width/4).dp)
+    Button(
+        modifier = btnModifier,
+        onClick = {
+        //your onclick code here
+    }) {
+        Text(text = "שלח")
     }
 }
 
