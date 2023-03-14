@@ -126,8 +126,14 @@ fun Content() {
 }
 
 private fun getPic(angl: Double): Int {
-    pic = if (angle>0 && angl<180) {R.raw.pic1}
-    else {R.raw.pic2}
+    when (angl) {
+        in 1.0..72.0 -> pic =  R.raw.pic2
+        in 72.1..144.0 -> pic =  R.raw.pic3
+        in 144.1..216.0 -> pic =  R.raw.pic4
+        in 216.1..288.0 -> pic =  R.raw.pic5
+        in 288.1..360.0 -> pic =  R.raw.pic1
+        else -> print("none of the above")
+    }
     return pic
 }
 
