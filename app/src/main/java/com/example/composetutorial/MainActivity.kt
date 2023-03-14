@@ -1,13 +1,10 @@
 package com.example.composetutorial
 
-import android.annotation.SuppressLint
-import android.media.Image
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.annotation.CheckResult
 import androidx.compose.foundation.*
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
@@ -18,7 +15,6 @@ import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
@@ -28,11 +24,6 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.Role.Companion.Image
-import androidx.compose.ui.tooling.preview.PreviewParameter
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import java.lang.Math.*
 import kotlin.math.atan2
 
@@ -61,12 +52,10 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Content() {
-    LoadingImageFromDisk()
     var radius by remember {mutableStateOf(0f)}
     var shapeCenter by remember {mutableStateOf(Offset.Zero)}
     var handleCenter by remember {mutableStateOf(Offset.Zero)}
     var angle by remember {mutableStateOf(20.0)}
-   // var picId by remember {mutableStateOf(angle)}
     val imageModifier = Modifier
         .offset(y= ((height/2)-rd/2).dp,x= ((width/2)-rd/2).dp)
         .clip(CircleShape)
@@ -134,7 +123,6 @@ fun Content() {
         )
         drawCircle(color = Color.Cyan, center = handleCenter, radius = 60f)
     }
-
 }
 
 private fun getPic(angl: Double): Int {
@@ -155,37 +143,11 @@ private fun getRotationAngle(currentPosition: Offset, center: Offset): Double {
     return angle
 }
 
-@SuppressLint("ResourceType")
-@Preview
-@Composable
-fun LoadingImageFromDisk() {
-    var picId by remember {mutableStateOf(angle)}
-    val imageModifier = Modifier
-    .offset(y= ((height/2)-rd/2).dp,x= ((width/2)-rd/2).dp)
-    .clip(CircleShape)
-    .size((rd).dp)
-/*
-    Image(
-        painter = painterResource(
-        id = if (picId>0&& picId<180) {
-                R.raw.pic1
-                } else {
-                R.raw.pic2
-            }),
-        contentDescription = stringResource(id = R.string.dog_content_description),
-        contentScale = ContentScale.Fit,
-        modifier = imageModifier,
-    )
-
- */
-}
-
 @Preview
 @Composable
 fun PreviewContent() {
     ComposeTutorialTheme {
         Surface {
-          //  LoadingImageFromDisk()
             Content()
         }
     }
