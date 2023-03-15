@@ -246,10 +246,10 @@ fun PreviewContent() {
 @Composable
 fun MyDB1() {
     val dropDounModifier = Modifier
-        .offset(y = ((height / 2) + rd*1.2).dp, x = (width/8).dp)
-        .size((width/2).dp)
+        .offset(y = ((height / 2) + rd*1.2).dp, x = 8.dp)
+        .size((width/1.6).dp)
         .height((rd/3).dp)
-    val listItems = arrayOf("Favorites", "Options", "Settings", "Share")
+    val listItems = arrayOf("אהבה","אושר","שמחה","נעימות","אמון","בטחון","גאווה","נינוחות","יציבות","התרגשות","סלחנות","חמלה","אכפתיות","רוממות רוח","פיוס","אדיבות","אמפטיה","מוצלחות","סיפוק","הישג","עליונות","כבוד","עונג","רעננות","נאמנות","הכרת תודה","אינטימיות","תקווה","השראה","הצלחה","סקרנות","אומץ","חיבה","נדיבות","איפוק","שלווה")
     val contextForToast = LocalContext.current.applicationContext
     var expanded by remember {mutableStateOf(false)} // state of the menu
     var selectedItem by remember {mutableStateOf(listItems[0])} // remember the selected item
@@ -300,62 +300,9 @@ fun MyDB1() {
 @Composable
 fun MyDB2() {
     val dropDounModifier = Modifier
-        .offset(y = ((height / 2) + rd*1.7).dp, x = (width/8).dp)
-        .size((width/2).dp)
-    val listItems = arrayOf("Favorites", "Options", "Settings", "Share")
-    val contextForToast = LocalContext.current.applicationContext
-    var expanded by remember {mutableStateOf(false)} // state of the menu
-    var selectedItem by remember {mutableStateOf(listItems[0])} // remember the selected item
-    // box
-    ExposedDropdownMenuBox(
-        expanded = expanded,
-        modifier = dropDounModifier,
-        onExpandedChange = {
-            expanded = !expanded
-        }
-    ) {
-        // text field
-        TextField(
-            value = selectedItem,
-            onValueChange = {},
-            readOnly = true,
-            label = { Text(text = "סל שלילי") },
-            trailingIcon = {
-                ExposedDropdownMenuDefaults.TrailingIcon(
-                    expanded = expanded
-                )
-            },
-            colors = ExposedDropdownMenuDefaults.textFieldColors()
-        )
-        // menu
-        ExposedDropdownMenu(
-            expanded = expanded,
-            onDismissRequest = { expanded = false }
-        ) {
-            // this is a column scope
-            // all the items are added vertically
-            listItems.forEach { selectedOption ->
-                // menu item
-                DropdownMenuItem(onClick = {
-                    selectedItem = selectedOption
-                    Toast.makeText(contextForToast, selectedOption, Toast.LENGTH_SHORT).show()
-                    expanded = false
-                }) {
-                    Text(text = selectedOption)
-                }
-            }
-        }
-    }
-}
-
-
-@OptIn(ExperimentalMaterialApi::class)
-@Composable
-fun MyDB3() {
-    val dropDounModifier = Modifier
-        .offset(y = ((height / 2) + rd*2.2).dp, x = (width/8).dp)
-        .size((width/2).dp)
-    val listItems = arrayOf("Favorites", "Options", "Settings", "Share")
+        .offset(y = ((height / 2) + rd*1.7).dp, x = 8.dp)
+        .size((width/1.6).dp)
+    val listItems = arrayOf("פעלתנות","שחרור","זיכוך","חופש","נחרצות","להיטות","תעוזה","מסוגלות","ערנות","התרגשות","ספקנות","מחויבות","אדישות","אפתיה","ניתוק","אטימות","קפדנות")
     val contextForToast = LocalContext.current.applicationContext
     var expanded by remember {mutableStateOf(false)} // state of the menu
     var selectedItem by remember {mutableStateOf(listItems[0])} // remember the selected item
@@ -401,13 +348,68 @@ fun MyDB3() {
     }
 }
 
+
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+fun MyDB3() {
+    val dropDounModifier = Modifier
+        .offset(y = ((height / 2) + rd*2.2).dp, x = 8.dp)
+        .size((width/1.6).dp)
+    val listItems = arrayOf("פחד","לחץ","עצב","כעס","שנאה","קנאה","עקצוץ","גועל","בוז","דיכאון","בגידה","אכזבה","התנגדות","זיעה","רעד","גירוד","גל קור","גל חום","עוינות","ציניות","זלזול","חוסר איזון","עצבנות","עייפות","דחייה","נטישה","פספוס – החמצה","חוסר ערך","דאגה","בלבול","תסכול","בדידות","מועקה","חוסר וודאות","קורבנות","מרירות")
+    val contextForToast = LocalContext.current.applicationContext
+    var expanded by remember {mutableStateOf(false)} // state of the menu
+    var selectedItem by remember {mutableStateOf(listItems[0])} // remember the selected item
+    // box
+    ExposedDropdownMenuBox(
+        expanded = expanded,
+        modifier = dropDounModifier,
+        onExpandedChange = {
+            expanded = !expanded
+        }
+    ) {
+        // text field
+        TextField(
+            value = selectedItem,
+            onValueChange = {},
+            readOnly = true,
+            label = { Text(text = "סל שלילי") },
+            trailingIcon = {
+                ExposedDropdownMenuDefaults.TrailingIcon(
+                    expanded = expanded
+                )
+            },
+            colors = ExposedDropdownMenuDefaults.textFieldColors()
+        )
+        // menu
+        ExposedDropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false }
+        ) {
+            // this is a column scope
+            // all the items are added vertically
+            listItems.forEach { selectedOption ->
+                // menu item
+                DropdownMenuItem(onClick = {
+                    selectedItem = selectedOption
+                    Toast.makeText(contextForToast, selectedOption, Toast.LENGTH_SHORT).show()
+                    expanded = false
+                }) {
+                    Text(text = selectedOption)
+                }
+            }
+        }
+    }
+}
+
 @Composable
 fun sendButton() {
     val btnModifier = Modifier
-        .offset(y = ((height / 2) + rd*2.2).dp, x = (width/1.5).dp)
+        .offset(y = ((height / 2) + rd*2.2).dp, x = (width/1.4).dp)
         //.size((width/4).dp)
         .height((width/6).dp)
         .width((width/4).dp)
+        .clip(CircleShape)
+
     Button(
         modifier = btnModifier,
         onClick = {
