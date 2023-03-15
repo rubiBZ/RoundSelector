@@ -236,8 +236,6 @@ fun PreviewContent() {
             MyDB2()
             MyDB3()
             sendButton()
-            //MessageCard("rubi")
-           // SimpleTextField()
         }
     }
 }
@@ -249,7 +247,7 @@ fun MyDB1() {
         .offset(y = ((height / 2) + rd*1.2).dp, x = 8.dp)
         .size((width/1.6).dp)
         .height((rd/3).dp)
-    val listItems = arrayOf("אהבה","אושר","שמחה","נעימות","אמון","בטחון","גאווה","נינוחות","יציבות","התרגשות","סלחנות","חמלה","אכפתיות","רוממות רוח","פיוס","אדיבות","אמפטיה","מוצלחות","סיפוק","הישג","עליונות","כבוד","עונג","רעננות","נאמנות","הכרת תודה","אינטימיות","תקווה","השראה","הצלחה","סקרנות","אומץ","חיבה","נדיבות","איפוק","שלווה")
+    val listItems = arrayOf("בחר","אהבה","אושר","שמחה","נעימות","אמון","בטחון","גאווה","נינוחות","יציבות","התרגשות","סלחנות","חמלה","אכפתיות","רוממות רוח","פיוס","אדיבות","אמפטיה","מוצלחות","סיפוק","הישג","עליונות","כבוד","עונג","רעננות","נאמנות","הכרת תודה","אינטימיות","תקווה","השראה","הצלחה","סקרנות","אומץ","חיבה","נדיבות","איפוק","שלווה")
     val contextForToast = LocalContext.current.applicationContext
     var expanded by remember {mutableStateOf(false)} // state of the menu
     var selectedItem by remember {mutableStateOf(listItems[0])} // remember the selected item
@@ -302,7 +300,7 @@ fun MyDB2() {
     val dropDounModifier = Modifier
         .offset(y = ((height / 2) + rd*1.7).dp, x = 8.dp)
         .size((width/1.6).dp)
-    val listItems = arrayOf("פעלתנות","שחרור","זיכוך","חופש","נחרצות","להיטות","תעוזה","מסוגלות","ערנות","התרגשות","ספקנות","מחויבות","אדישות","אפתיה","ניתוק","אטימות","קפדנות")
+    val listItems = arrayOf("בחר","פעלתנות","שחרור","זיכוך","חופש","נחרצות","להיטות","תעוזה","מסוגלות","ערנות","התרגשות","ספקנות","מחויבות","אדישות","אפתיה","ניתוק","אטימות","קפדנות")
     val contextForToast = LocalContext.current.applicationContext
     var expanded by remember {mutableStateOf(false)} // state of the menu
     var selectedItem by remember {mutableStateOf(listItems[0])} // remember the selected item
@@ -355,7 +353,7 @@ fun MyDB3() {
     val dropDounModifier = Modifier
         .offset(y = ((height / 2) + rd*2.2).dp, x = 8.dp)
         .size((width/1.6).dp)
-    val listItems = arrayOf("פחד","לחץ","עצב","כעס","שנאה","קנאה","עקצוץ","גועל","בוז","דיכאון","בגידה","אכזבה","התנגדות","זיעה","רעד","גירוד","גל קור","גל חום","עוינות","ציניות","זלזול","חוסר איזון","עצבנות","עייפות","דחייה","נטישה","פספוס – החמצה","חוסר ערך","דאגה","בלבול","תסכול","בדידות","מועקה","חוסר וודאות","קורבנות","מרירות")
+    val listItems = arrayOf("בחר","פחד","לחץ","עצב","כעס","שנאה","קנאה","עקצוץ","גועל","בוז","דיכאון","בגידה","אכזבה","התנגדות","זיעה","רעד","גירוד","גל קור","גל חום","עוינות","ציניות","זלזול","חוסר איזון","עצבנות","עייפות","דחייה","נטישה","פספוס – החמצה","חוסר ערך","דאגה","בלבול","תסכול","בדידות","מועקה","חוסר וודאות","קורבנות","מרירות")
     val contextForToast = LocalContext.current.applicationContext
     var expanded by remember {mutableStateOf(false)} // state of the menu
     var selectedItem by remember {mutableStateOf(listItems[0])} // remember the selected item
